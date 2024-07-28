@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         await postQuotesToServer(newLocalQuotes);
         populateCategories();
         filterQuotes();
-        showNotification('Quotes synced with server.');
+        showNotification('Quotes synced with server!');
     }
 
     function resolveConflicts(localQuotes, serverQuotes) {
