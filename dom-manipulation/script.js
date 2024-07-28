@@ -13,11 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { text: "You have within you right now, everything you need to deal with whatever the world can throw at you.", category: "Inspiration" },
     ];
 
-    let categories = JSON.parse(localStorage.getItem('categories')) || [];
-
     function saveQuotes() {
         localStorage.setItem('quotes', JSON.stringify(quotes));
-        localStorage.setItem('categories', JSON.stringify(categories));
     }
 
     function showRandomQuote() {
@@ -36,11 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const newQuoteCategory = document.getElementById('newQuoteCategory').value.trim();
         if (newQuoteText && newQuoteCategory) {
             quotes.push({ text: newQuoteText, category: newQuoteCategory });
-            if (!categories.includes(newQuoteCategory)) {
-                categories.push(newQuoteCategory);
-                populateCategories();
-            }
             saveQuotes();
+            populateCategories();
             document.getElementById('newQuoteText').value = '';
             document.getElementById('newQuoteCategory').value = '';
             alert('Quote added successfully!');
@@ -70,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function populateCategories() {
+        const categories = [...new Set(quotes.map(quote => quote.category))];
         categoryFilter.innerHTML = '<option value="all">All Categories</option>';
         categories.forEach(category => {
             const option = document.createElement('option');
@@ -112,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addQuoteButton.addEventListener('click', addQuote);
     exportQuotesButton.addEventListener('click', exportQuotesToJson);
     importFileInput.addEventListener('change', importFromJsonFile);
+    categoryFilter.addEventListener('change', filterQuotes);
 
     populateCategories();
     filterQuotes();
