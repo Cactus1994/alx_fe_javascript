@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             quotes.push({ text: newQuoteText, category: newQuoteCategory });
             if (!categories.includes(newQuoteCategory)) {
                 categories.push(newQuoteCategory);
-                populateCategoryFilter();
+                populateCategories();
             }
             saveQuotes();
             document.getElementById('newQuoteText').value = '';
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('selectedCategory', categoryFilter.value);
     }
 
-    function populateCategoryFilter() {
+    function populateCategories() {
         categoryFilter.innerHTML = '<option value="all">All Categories</option>';
         categories.forEach(category => {
             const option = document.createElement('option');
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             quotes.push(...importedQuotes);
             saveQuotes();
             alert('Quotes imported successfully!');
-            populateCategoryFilter();
+            populateCategories();
             filterQuotes();
         };
         fileReader.readAsText(event.target.files[0]);
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     exportQuotesButton.addEventListener('click', exportQuotesToJson);
     importFileInput.addEventListener('change', importFromJsonFile);
 
-    populateCategoryFilter();
+    populateCategories();
     filterQuotes();
     showRandomQuote();
 });
